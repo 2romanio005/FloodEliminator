@@ -7,3 +7,5 @@ extern bool leakStatus;
 
 extern LeakSensor *arrLeakSensor[NUMBER_LEAK_SENSOR];
 extern Valve *valve;
+
+extern GyverWDT Watchdog;

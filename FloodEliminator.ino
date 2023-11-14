@@ -18,6 +18,8 @@ void setup() {
   digitalWrite(DPIN_SPEAKER, true);                   // пискнуть в начале
   delay(200);
   digitalWrite(DPIN_SPEAKER, false);
+
+  Watchdog.enable(RESET_MODE, WDT_PRESCALER);           // Режим сторжевого сброса
 }
 
 void loop() {
@@ -48,4 +50,6 @@ void loop() {
       delay(50);
     } while (!digitalRead(DPIN_BUTTON));
   }
+  
+  Watchdog.reset(); // Переодический сброс watchdog, означающий, что устройство не зависло
 }
