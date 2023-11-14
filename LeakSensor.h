@@ -10,11 +10,11 @@ class LeakSensor{
   
     bool handler();
 
-    bool setFlagStatus(bool flagStatus);
+    bool setSensorStatus(const bool sensorStatus);
   private:
     const uint8_t dPidSensor;
     const uint8_t dPidLed;
     const uint16_t eepromCell;
     
-    bool flagStatus;
+    bool sensorStatus;
 };

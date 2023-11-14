@@ -3,5 +3,8 @@
 
 #include "1Connection.h"
 
-extern LeakSensor* arrLeakSensor;
+extern bool leakStatus;
+
+extern LeakSensor* arrLeakSensor[numberLeakSensor];
+extern Valve* valve;
 //extern LeakSensor arrLeakSensor[numberLeakSensor];

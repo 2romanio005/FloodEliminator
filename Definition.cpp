@@ -1,6 +1,9 @@
 #include "Main.h"
 
 
+bool leakStatus = false;
 
-LeakSensor* arrLeakSensor;
+LeakSensor* arrLeakSensor[numberLeakSensor];
+Valve* valve;
+
 //LeakSensor arrLeakSensor[numberLeakSensor];
