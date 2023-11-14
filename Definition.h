@@ -5,6 +5,6 @@
 
 extern bool leakStatus;
 
-extern LeakSensor* arrLeakSensor[numberLeakSensor];
-extern Valve* valve;
-//extern LeakSensor arrLeakSensor[numberLeakSensor];
+extern LeakSensor *arrLeakSensor[NUMBER_LEAK_SENSOR];
+extern Valve *valve;
+//extern LeakSensor arrLeakSensor[NUMBER_LEAK_SENSOR];

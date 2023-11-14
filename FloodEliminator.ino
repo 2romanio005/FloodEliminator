@@ -2,22 +2,46 @@
 
 #include "Main.h"
 
-void setup() { 
-  for(uint8_t i = 0; i < numberLeakSensor; ++i){
-    arrLeakSensor[i] = new LeakSensor(DPIN_FIRST_LEAK_SENSOR + i, DPIN_FIRST_LED_LEAK_SENSOR + 1, uint16_t(i));
+void setup() {
+  // Serial.begin(9600);
+  
+  for (uint8_t i = 0; i < NUMBER_LEAK_SENSOR; ++i) {     // создание датчиков
+    arrLeakSensor[i] = new LeakSensor(DPIN_FIRST_LEAK_SENSOR + i, DPIN_FIRST_LED_LEAK_SENSOR + i, uint16_t(EEPROM_CELL_FIRST_LEAK_SENSOR + i));
   }
-  valve = new Valve(DPIN_VALVE, DPIN_LED_ON, DPIN_LED_OFF);
-  pinMode(DPIN_SQUEAKER, OUTPUT);
+  
+  valve = new Valve(DPIN_VALVE, DPIN_LED_ON, DPIN_LED_OFF, EEPROM_CELL_VALVE);    // создание крана
+  valve->handler();
+  
+  pinMode(DPIN_BUTTON, INPUT_PULLUP);                  // кнопка
+
+  pinMode(DPIN_SQUEAKER, OUTPUT);                      // пищалка
+  digitalWrite(DPIN_SQUEAKER, true);                   // пискнуть в начале
+  delay(200);
+  digitalWrite(DPIN_SQUEAKER, false);
 }
 
 void loop() {
-  for(uint8_t i = 0; i < numberLeakSensor; ++i){
+  for (uint8_t i = 0; i < NUMBER_LEAK_SENSOR; ++i) {    // проверка датчиков
     leakStatus |= arrLeakSensor[i]->handler();
   }
-  if(leakStatus){
-    valve->setValveStatus(false);           // перекрыть воду при протечке
+  digitalWrite(DPIN_SQUEAKER, leakStatus);
+  
+  if (leakStatus) {
+    valve->setValveStatus(false);                       // перекрыть воду при протечке
   }
   valve->handler();
-
-  digitalWrite(DPIN_SQUEAKER, leakStatus);
+  
+  if (!digitalRead(DPIN_BUTTON)) {                      // обработка нажатий кнопки
+    digitalWrite(DPIN_SQUEAKER, !leakStatus);
+    if (valve->changeValveStatus()) {
+      leakStatus = false;
+      for (uint8_t i = 0; i < NUMBER_LEAK_SENSOR; ++i) {
+        arrLeakSensor[i]->setSensorStatus(false);       // сброс показаний датчиков
+      }
+    }
+    
+    do {
+      delay(50);
+    } while (!digitalRead(DPIN_BUTTON));
+  }
 }

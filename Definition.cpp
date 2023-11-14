@@ -3,7 +3,7 @@
 
 bool leakStatus = false;
 
-LeakSensor* arrLeakSensor[numberLeakSensor];
-Valve* valve;
+LeakSensor *arrLeakSensor[NUMBER_LEAK_SENSOR];
+Valve *valve;
 
-//LeakSensor arrLeakSensor[numberLeakSensor];
+//LeakSensor arrLeakSensor[NUMBER_LEAK_SENSOR];
