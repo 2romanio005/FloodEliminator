@@ -24,7 +24,7 @@ void Valve::setValveStatus(const bool valveStatus) {
 bool Valve::changeValveStatus() {
   this->valveStatus = !this->valveStatus;
   eeprom_write_byte(this->eepromCell, uint8_t(this->valveStatus) * MAX_BYTE);
-  this->flagChangingStatus = true;
+  //this->flagChangingStatus = true;
   return this->valveStatus;
 }
 

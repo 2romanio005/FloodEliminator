@@ -14,17 +14,17 @@ void setup() {
   
   pinMode(DPIN_BUTTON, INPUT_PULLUP);                  // кнопка
 
-  pinMode(DPIN_SQUEAKER, OUTPUT);                      // пищалка
-  digitalWrite(DPIN_SQUEAKER, true);                   // пискнуть в начале
+  pinMode(DPIN_SPEAKER, OUTPUT);                      // пищалка
+  digitalWrite(DPIN_SPEAKER, true);                   // пискнуть в начале
   delay(200);
-  digitalWrite(DPIN_SQUEAKER, false);
+  digitalWrite(DPIN_SPEAKER, false);
 }
 
 void loop() {
   for (uint8_t i = 0; i < NUMBER_LEAK_SENSOR; ++i) {    // проверка датчиков
     leakStatus |= arrLeakSensor[i]->handler();
   }
-  digitalWrite(DPIN_SQUEAKER, leakStatus);
+  digitalWrite(DPIN_SPEAKER, leakStatus);
   
   if (leakStatus) {
     valve->setValveStatus(false);                       // перекрыть воду при протечке
@@ -32,11 +32,15 @@ void loop() {
   valve->handler();
   
   if (!digitalRead(DPIN_BUTTON)) {                      // обработка нажатий кнопки
-    digitalWrite(DPIN_SQUEAKER, !leakStatus);
+    digitalWrite(DPIN_SPEAKER, !leakStatus);
     if (valve->changeValveStatus()) {
       leakStatus = false;
       for (uint8_t i = 0; i < NUMBER_LEAK_SENSOR; ++i) {
-        arrLeakSensor[i]->setSensorStatus(false);       // сброс показаний датчиков
+        leakStatus |= arrLeakSensor[i]->resetSensorStatus();          // сброс показаний датчиков (тех которые уже не активны)
+      }
+      
+      if(!leakStatus){
+        delay(100);                                                   // на случай коротко-временного пропадания сигнала сдатчика с последующим возвращением
       }
     }
     

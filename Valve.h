@@ -19,5 +19,5 @@ class Valve {
     const uint16_t eepromCell;
 
     bool valveStatus;             // false - закрытый, true - открытый
-    bool flagChangingStatus;
+    //bool flagChangingStatus;
 };

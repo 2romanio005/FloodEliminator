@@ -7,17 +7,36 @@ LeakSensor::LeakSensor(const uint8_t dPinSensor, const uint8_t dPinLed, const ui
 }
 
 bool LeakSensor::handler() {
-  if (digitalRead(this->dPinSensor) && !this->sensorStatus) {
-    this->setSensorStatus(true);
+  if (this->getSensorValue() && !this->sensorStatus) {
+    if (!this->flagChangingStatus) {
+      this->flagChangingStatus = true;
+      this->timerChangingStatus = millis();
+    }
+    if (millis() - this->timerChangingStatus >= TIMER_DURATION_OF_LEAK_SENSOR) {
+      this->setSensorStatus(true);
+      this->flagChangingStatus = false;
+    }
+  } else {
+    flagChangingStatus = false;
   }
+  
   digitalWrite(this->dPinLed, this->sensorStatus);
-//  Serial.print(this->dPinSensor);
-//  Serial.print('\t');
-//  Serial.println(this->sensorStatus);
   return this->sensorStatus;
 }
 
 bool LeakSensor::setSensorStatus(const bool sensorStatus) {
   eeprom_update_byte(this->eepromCell, uint8_t(sensorStatus) * MAX_BYTE);
   return this->sensorStatus = sensorStatus;
+}
+
+bool LeakSensor::resetSensorStatus() {
+  if (!this->getSensorValue()) {
+    this->setSensorStatus(false);
+  }
+  return this->sensorStatus;
+}
+
+
+bool LeakSensor::getSensorValue() {
+  return !digitalRead(this->dPinSensor);
 }
