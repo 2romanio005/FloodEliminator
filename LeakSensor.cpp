@@ -19,7 +19,7 @@ bool LeakSensor::handler() {
   } else {
     flagChangingStatus = false;
   }
-  
+
   digitalWrite(this->dPinLed, this->sensorStatus);
   return this->sensorStatus;
 }

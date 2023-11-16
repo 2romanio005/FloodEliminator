@@ -8,4 +8,6 @@ extern bool leakStatus;
 extern LeakSensor *arrLeakSensor[NUMBER_LEAK_SENSOR];
 extern Valve *valve;
 
+#ifdef WDT_ACTIVE
 extern GyverWDT Watchdog;
+#endif

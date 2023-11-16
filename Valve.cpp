@@ -4,7 +4,7 @@ Valve::Valve(const uint8_t dPinValve, const uint8_t dPinLedOn, const uint8_t dPi
   pinMode(this->dPinValve, OUTPUT);
   pinMode(this->dPinLedOn, OUTPUT);
   pinMode(this->dPinLedOff, OUTPUT);
-  
+
   this->valveStatus = eeprom_read_byte(this->eepromCell);
 }
 

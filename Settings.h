@@ -5,6 +5,9 @@
 
 #define NORMAL_OPEN true                   // поставить true если НОРМАЛЬНО-ОТКРЫТЫЙ, и false если НОРМАЛЬНО-ЗАКРЫТЫЙ
 
+#define WDT_ACTIVE                         // если закоментировать то WatchDog будет вырезан из кода
+
+#ifdef WDT_ACTIVE
 #define WDT_PRESCALER WDT_PRESCALER_256    // максимальное время прохождения loop цикла (при привышении автоматическая перезагрузка)    (256 = ~1c)
 /*
   #define WDT_PRESCALER_2     0x00  // (16 ± 1.6) ms
@@ -18,3 +21,4 @@
   #define WDT_PRESCALER_512   0x08  // (4096 ± 409.6) ms
   #define WDT_PRESCALER_1024  0x09  // (8192 ± 819.2) ms
 */
+#endif

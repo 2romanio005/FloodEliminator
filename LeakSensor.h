@@ -14,7 +14,7 @@ class LeakSensor {
     bool resetSensorStatus();
   private:
     bool getSensorValue();      // возвращает значение с пина датчика
-  
+
     const uint8_t dPinSensor;
     const uint8_t dPinLed;
     const uint16_t eepromCell;
