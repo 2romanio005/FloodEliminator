@@ -12,7 +12,7 @@ void setup() {
   }
 
 // НАСТРОЙКА ВСЯКОГО БАРАХЛА, ЗАДЕЖКИ НЕ КРИТИЧНЫ
-  // Serial.begin(9600);
+  //Serial.begin(9600);
   pinMode(DPIN_BUTTON, INPUT_PULLUP);                 // кнопка
 
   pinMode(DPIN_SPEAKER, OUTPUT);                      // пищалка
@@ -40,6 +40,7 @@ void loop() {
   valve->handler();
 
   if (!digitalRead(DPIN_BUTTON)) {                      // обработка нажатий кнопки
+    //Serial.println("Clicked AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     digitalWrite(DPIN_SPEAKER, !leakStatus);
     do {
       delay(50);

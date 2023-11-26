@@ -21,6 +21,11 @@ bool LeakSensor::handler() {
   }
 
   digitalWrite(this->dPinLed, this->sensorStatus);
+//  Serial.print(this->dPinSensor);
+//  Serial.print('\t');
+//  Serial.print(this->dPinLed);
+//  Serial.print('\t');
+//  Serial.println(this->flagChangingStatus);
   return this->sensorStatus;
 }
 
