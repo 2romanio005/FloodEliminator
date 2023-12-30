@@ -4,6 +4,7 @@
 #include "1Connection.h"
 
 extern bool leakStatus;
+extern bool speakerStatus;
 
 extern LeakSensor *arrLeakSensor[NUMBER_LEAK_SENSOR];
 extern Valve *valve;
